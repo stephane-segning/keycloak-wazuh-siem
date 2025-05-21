@@ -1,0 +1,4 @@
+.docker
+.idea
+log
+wazuh_indexer_ssl_certs
