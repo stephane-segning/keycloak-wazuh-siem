@@ -8,7 +8,38 @@ This project demonstrates how to integrate Keycloak with Wazuh to monitor authen
 
 ## Architecture
 
-![Architecture Diagram](docs/images/architecture-diagram.png)
+<!-- Improved with descriptive alt text, embedded diagram, and proper reference -->
+<div align="center">
+  <figure>
+    <figcaption><strong>Keycloak-Wazuh Integration Architecture</strong></figcaption>
+
+```mermaid
+graph TD
+    A[Keycloak] -->|Events| B[webhook-syslog provider]
+    B -->|RFC 5424| C[Syslog-ng]
+    C -->|Logs| D[Wazuh Manager]
+    D -->|Processed Events| E[Wazuh Indexer]
+    D -->|Alerts| F[Wazuh Dashboard]
+    E -->|Data| F
+    
+    subgraph Keycloak
+    A
+    B
+    end
+    
+    subgraph Log Collection
+    C
+    end
+    
+    subgraph Wazuh
+    D
+    E
+    F
+    end
+```
+    <p><em>Data flow diagram showing how events move through the system components</em></p>
+  </figure>
+</div>
 
 The integration works by:
 1. Configuring Keycloak to send events to Syslog using a webhook provider
