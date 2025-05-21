@@ -37,7 +37,7 @@ graph TD
     F
     end
 ```
-    <p><em>Data flow diagram showing how events move through the system components</em></p>
+    Data flow diagram showing how events move through the system components
   </figure>
 </div>
 
