@@ -31,8 +31,8 @@ The integration works by:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/keycloak-wazuh-monitoring.git
-cd keycloak-wazuh-monitoring
+git clone https://github.com/stephane-segning/keycloak-wazuh-siem.git
+cd keycloak-wazuh-siem
 
 # Start the environment
 cd deployment/docker
