@@ -11,6 +11,7 @@
     <!-- Multiple Failed Logins - Brute Force Detection -->
     <rule id="110101" level="10" frequency="5" timeframe="300">
         <if_matched_sid>110001</if_matched_sid>
+        <field name="type">LOGIN_ERROR</field>
         <same_source_ip/>
         <description>Keycloak: Possible brute force attack from IP $(ipAddress) - multiple failed logins</description>
         <group>authentication_failures,brute_force,attack,</group>
@@ -22,6 +23,7 @@
     <!-- Multiple Failed Logins - Different Users -->
     <rule id="110102" level="12" frequency="5" timeframe="300">
         <if_matched_sid>110001</if_matched_sid>
+        <field name="type">LOGIN</field>
         <same_srcip/>
         <different_user/>
         <description>Keycloak: Brute force attack on multiple users from IP $(ipAddress)</description>
@@ -63,6 +65,13 @@
         <different_srcgeoip/>
         <description>Keycloak: Login from new geographic location - IP: $(ipAddress)</description>
         <group>authentication_success,unusual_location,</group>
+    </rule>
+
+    <!-- Login From Unusual Location -->
+    <rule id="110151" level="11" frequency="5" timeframe="300">
+        <if_matched_sid>110150</if_matched_sid>
+        <description>Keycloak: Possible bruteforce attack from new geographic location - with IP: $(ipAddress)</description>
+        <group>authentication_success,unusual_location,brute_force,</group>
     </rule>
     
     <!-- Client Registration -->
