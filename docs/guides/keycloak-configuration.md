@@ -47,7 +47,7 @@ Once the provider is installed, you need to configure your realm to use it:
 
 ## Environment Variables
 
-The webhook-syslog provider is configured using environment variables. In our Docker setup, these are defined in the `docker-compose.yml` file:
+The webhook-syslog provider is configured using environment variables. In our Docker setup, these are defined in the `compose.yml` file:
 
 ```yaml
 environment:
@@ -108,11 +108,11 @@ To test that events are being sent correctly:
 1. Log in to Keycloak with a test user.
 2. Check the Syslog-ng logs:
    ```bash
-   docker-compose logs syslog-ng
+   docker compose logs syslog-ng
    ```
 3. Check the Wazuh Manager logs:
    ```bash
-   docker-compose logs wazuh.manager
+   docker compose logs wazuh.manager
    ```
 4. Look for events in the Wazuh Dashboard.
 

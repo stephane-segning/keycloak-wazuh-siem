@@ -54,14 +54,13 @@ To set up the project for development:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/keycloak-wazuh-monitoring.git
-   cd keycloak-wazuh-monitoring
+   git clone https://github.com/stephane-segning/keycloak-wazuh-siem.git
+   cd keycloak-wazuh-siem
    ```
 
 2. Start the development environment:
    ```bash
-   cd deployment/docker
-   docker-compose up -d
+   docker compose up -d
    ```
 
 3. Make your changes and test them in the development environment.

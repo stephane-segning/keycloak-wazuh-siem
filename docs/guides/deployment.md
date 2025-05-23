@@ -13,19 +13,18 @@ This guide explains how to deploy the Keycloak-Wazuh integration using Docker Co
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/keycloak-wazuh-monitoring.git
-   cd keycloak-wazuh-monitoring
+   git clone https://github.com/yourusername/keycloak-wazuh-siem.git
+   cd keycloak-wazuh-siem
    ```
 
 2. Generate SSL certificates for Wazuh components:
    ```bash
-   cd deployment/docker
-   docker-compose -f ../../templates/generate-indexer-certs.yml up
+   docker compose -f generate-indexer-certs.yml up
    ```
 
 3. Start the environment:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 4. Access the components:
@@ -61,7 +60,7 @@ If you need to regenerate the certificates:
 
 2. Run the certificate generator:
    ```bash
-   docker-compose -f templates/generate-indexer-certs.yml up
+   docker compose -f generate-indexer-certs.yml up
    ```
 
 ### Keycloak Configuration
@@ -70,7 +69,7 @@ The default setup includes a preconfigured realm with the webhook-syslog provide
 
 1. Export your realm configuration from your existing Keycloak instance
 2. Place the exported JSON file in `config/keycloak/realm/`
-3. Update the `docker-compose.yml` file to use your realm file
+3. Update the `compose.yml` file to use your realm file
 
 Make sure your realm has the webhook-syslog provider enabled in the events listeners.
 
@@ -81,7 +80,7 @@ The default setup includes custom decoders and rules for Keycloak events. If you
 1. Edit the files in `config/wazuh/decoders/` and `config/wazuh/rules/`
 2. Restart the Wazuh Manager:
    ```bash
-   docker-compose restart wazuh.manager
+   docker compose restart wazuh.manager
    ```
 
 ## Troubleshooting
@@ -92,13 +91,13 @@ You can check the logs of each component:
 
 ```bash
 # Keycloak logs
-docker-compose logs keycloak
+docker compose logs keycloak
 
 # Wazuh Manager logs
-docker-compose logs wazuh.manager
+docker compose logs wazuh.manager
 
 # Syslog-ng logs
-docker-compose logs syslog-ng
+docker compose logs syslog-ng
 ```
 
 ### Common Issues

@@ -1,6 +1,3 @@
-# Wazuh App Copyright (C) 2017, Wazuh Inc. (License GPLv2)
-version: '3.7'
-
 services:
   wazuh.manager:
     image: wazuh/wazuh-manager:4.12.0
@@ -47,7 +44,7 @@ services:
       - ./config/wazuh_cluster/wazuh_manager.conf.xml:/wazuh-config-mount/etc/ossec.conf:ro
       - ./config/wazuh_cluster/local_decoder.xml:/wazuh-config-mount/etc/decoders/0001-local_decoder.xml:ro
       - ./config/wazuh_cluster/local_rules.xml:/wazuh-config-mount/etc/rules/local_rules.xml:ro
-      - .docker/syslog/log:/var/log/keycloak:ro
+      - syslog_log:/var/log/keycloak:ro
 
   wazuh.indexer:
     image: wazuh/wazuh-indexer:4.12.0
@@ -123,7 +120,10 @@ services:
       WEBHOOK_SYSLOG_MESSAGE_FORMAT: RFC_5424
     entrypoint: /bin/sh
     depends_on:
-      - syslog-ng
+      syslog-ng:
+        condition: service_started
+      download-theme:
+        condition: service_completed_successfully
     links:
       - syslog-ng
     command:
@@ -134,6 +134,7 @@ services:
         /opt/keycloak/bin/kc.sh start-dev --import-realm # Start Keycloak in dev mode and import the realm
     volumes:
       - ./config/keycloak_config/:/opt/keycloak/data/import/:ro
+      - ./config/wazuh_indexer_ssl_certs/root-ca-manager.pem:/etc/ssl/root-ca.pem
       - spi:/tmp/libs:ro
     
   
@@ -153,12 +154,12 @@ services:
       - spi:/spi
 
   syslog-ng:
-    image: lscr.io/linuxserver/syslog-ng
+    image: balabit/syslog-ng:latest
     environment:
       - TZ=Etc/Berlin
-      - LOG_TO_STDOUT=true
     volumes:
-      - .docker/syslog/log:/var/log #optional
+      - syslog_log:/var/log
+      - ./config/syslog-ng/config.conf:/etc/syslog-ng/syslog-ng.conf:ro
     restart: unless-stopped
         
 volumes:
